@@ -135,3 +135,5 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 ACCOUNT_AUTHENTICATION_METHOD= ("email")
 TIME_ZONE ='Africa/Lagos'
 LOGOUT_REDIRECT_URL = 'login/'
+import django_heroku
+django_heroku.settings(locals())
