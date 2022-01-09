@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <style>
+
+p{
+
+
+}
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+     font-size: 15px;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+     font-size: 15px;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+     font-size: 15px;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+     font-size: 15px;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+     font-size: 15px;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+    font-size: 15px;
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: black;
+    font-size: 20px;
+}
+
+    </style>
+</head>
+<body>
+<!-- only internal css classes below are doing something -->
+<div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
+            <turbo-frame id="hi">
+
+              <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
+                <div class="rounded-t mb-0 px-4 py-3 border-0">
+                   <a class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" href="{%url 'product_app:manage_transactions'%}">Change date range</a>
+                </div>
+                <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+                    <h1 style="text-align:center" class="font-semibold text-base text-blueGray-900">
+                       Report of Sales
+                      </h1>
+                      <h3 class="font-semibold text-base text-blueGray-900">
+                       from: {{ orders|get_value:'start_date' }}
+                      </h3>
+                        <h3 class="font-semibold text-base text-blueGray-700">
+                      to: {{ orders|get_value:'end_date' }}
+                      </h3>
+                    </div>
+
+              </div>
+
+
+        <div class="flex flex-col">
+            {%for product in products%}
+  <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+
+
+                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+<h1 class="font-semibold bg-white text-base text-blueGray-900">
+                      {{ product.product_name }}
+                      </h1>
+        <table class="styled-table" >
+          <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                SubProductName
+              </th>
+
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Total Pieces Ordered
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Total Expected Income(NGN)
+              </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Price/quantity sold
+              </th>
+
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+           {%for each_sub_product in sub_products_details%}
+        {%with sub_product=each_sub_product|get_value:'sub_product'%}
+           {%if sub_product.product == product%}
+            <tr>
+
+              <th class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+
+                  <div class="ml-4">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{each_sub_product|get_value:'sub_product'}}
+                    </div>
+
+                  </div>
+                </div>
+              </th>
+
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                    {{each_sub_product|get_value:'total_piece_ordered'}}
+                </span>
+
+              </td>
+
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+               {{each_sub_product|get_value:'total_expected_income'}}
+              </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {%with price_list=each_sub_product|get_value:'price_list'%}
+                    {%with final_list=price_list|analyze_nested_list:'0'%}
+                    {%for each in final_list%}
+                    <p>{{each}}</p>
+                    {%endfor%}
+
+                    {%endwith%}{%endwith%}
+              </td>
+
+
+            </tr>
+           {%endif%}
+           {%endwith%}
+          {%endfor%}
+
+            <!-- More people... -->
+          </tbody>
+        </table>
+
+
+      </div>
+
+    </div>
+  </div>
+            {%endfor%}
+        </div>
+
+
+ <div class="flex flex-col">
+<div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+<div class="py-2 align-middle inline-block min-w-full bg-white sm:px-6 lg:px-8">
+    <h2 style="text-align:center">Grand Totals</h2>
+<div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+     <table class="styled-table">
+<thead>
+  <tr>
+    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+      Total Order Price
+    </th>
+    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+     Total Fund Received
+    </th>
+    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+     Total Discount Given
+    </th>
+      <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+     Total Outstanding Funds
+    </th>
+
+  </tr>
+</thead>
+<tbody>
+
+  <tr class="active-row">
+    <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+      NGN {{ orders|get_value:'c_total_order_price' }}
+    </th>
+    <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+     NGN {{ orders|get_value:'total_funds_received' }}
+    </td>
+    <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+     NGN {{ orders|get_value:'total_discount' }}
+    </td>
+      <td style="color: red" class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+     NGN {{ orders|get_value:'total_outstanding_funds' }}
+    </td>
+
+  </tr>
+
+</tbody>
+</table>
+</div> {%if orders|get_value:'error'%} <p style="font-color: red">{{ orders|get_value:'error' }}</p> {%endif%}
+</div></div>
+ <a class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"target="_blank" href="{%url 'product_app:print_report' orders|get_value:'start_date' orders|get_value:'end_date'%}">re-print this report</a>
+
+ </div>
+            </turbo-frame></div>
+
+
+
+
+</body>
+</html>
