@@ -109,7 +109,7 @@ def manager_required(view_func=None, redirect_field_name=REDIRECT_FIELD_NAME, lo
     staff, displaying message if provided.
     """
     actual_decorator = user_passes_test(
-        lambda u: u.is_active and u.is_authenticated and u.is_manager and not u.is_suspended or u.is_director,
+        lambda u: u.is_active and u.is_authenticated and u.is_manager and not u.is_suspended,
         login_url=login_url,
         redirect_field_name=redirect_field_name,
         message=message
