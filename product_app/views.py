@@ -1,5 +1,5 @@
 from datetime import datetime
-from .forms import UserForm
+from .forms import UserForm, ProductForm, ProductSubTypeForm
 
 from django.shortcuts import render, redirect, HttpResponse
 from decorators import  manager_required, counter_staff_required
@@ -173,6 +173,54 @@ def new_staff_creation(request):
         form1.save()
     print('form not valid')
     return render(request, 'manager_components/staff_creation.html', {'form1':form1})
+
+
+
+
+def product_edit_page(request, product_id):
+    product = Product.objects.get(id = product_id)
+    form = ProductForm(request.POST or None,instance=product)
+    if form.is_valid():
+        form.save()
+        return redirect(reverse('product_app:manage_product'))
+    else:
+        return render(request, 'manager_components/product_edit_page.html', {'form': form, 'product':product})
+
+
+
+def create_product(request):
+    form = ProductForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect(reverse('product_app:manage_product'))
+    else:
+        return render(request, 'manager_components/create_product.html', {'form': form})
+
+
+
+
+
+def sub_product_edit_page(request, sub_product_id):
+    sub_product = ProductSubType.objects.get(id = sub_product_id)
+    form = ProductSubTypeForm(request.POST or None,instance=sub_product)
+    if form.is_valid():
+        form.save()
+        return redirect(reverse('product_app:manage_product'))
+    else:
+        return render(request, 'manager_components/sub_product_edit_page.html', {'form': form, 'sub_product':sub_product})
+
+
+def create_sub_product(request, product_id):
+    product = Product.objects.get(id = product_id)
+    form = ProductSubTypeForm(request.POST or None)
+    if form.is_valid():
+        a= form.save(commit=False)
+        a.product = product
+        a.save()
+        return redirect(reverse('product_app:manage_product'))
+    else:
+        return render(request, 'manager_components/sub_product_create_page.html', {'form': form, 'product':product})
+
 
 
 @counter_staff_required()

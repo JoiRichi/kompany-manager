@@ -2,7 +2,7 @@ from django import  forms
 from django.forms import ModelForm
 from datetime import datetime
 from accounts.models import CustomUser, Profile
-from .models import Order
+from .models import Order, Product, ProductSubType
 
 from django.contrib.auth.forms import UserCreationForm
 
@@ -43,3 +43,17 @@ class OrderEditForm(forms.ModelForm):
     deposit = models.FloatField(default=0)
     discount = models.FloatField(default=0)
     balance = models.FloatField(default=0)'''
+
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ('product_name',)
+
+
+
+
+class ProductSubTypeForm(forms.ModelForm):
+    class Meta:
+        model = ProductSubType
+        fields = ('sub_type_name', "price")

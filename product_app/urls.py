@@ -12,12 +12,33 @@ urlpatterns = [
     path('manager/manage_staff/pardon/<int:staff_id>', views.pardon, name="pardon_staff"),
 
 
-    path('manager/manage_product/', views.product_management_page, name= "manage_product"),
+
+
+
+    path('manager/manage_product/', views.product_management_page, name="manage_product"),
+    path('manager/manage_product/create_product/', views.create_product, name="create_product"),
+
+    path('manager/manage_product/edit_product_page/<int:product_id>/', views.product_edit_page, name="edit_product"),
+
+    path('manager/manage_product/edit_sub_product_page/<int:sub_product_id>/', views.sub_product_edit_page, name="edit_sub_product"),
+
+    path('manager/manage_product/create_sub_product_page/<int:product_id>/', views.create_sub_product, name="create_sub_product"),
+
+
+
+
+
+
+
+
+
+
     path('manager/manage_costumer/', views.costumer_management_page, name="manage_costumer"),
     path('manager/', views.get_orders_based_on_date_func, name="manage_transactions"),
     #path('manager/manage_transactions/search', views.get_orders_based_on_date, name="submit_search"),
     path('manager/manage_transactions/print_report/<start_date>/<end_date>/', views.print_report, name="print_report"),
-    path('manager/manage_transactions/print_costumer_report/<int:costumer_id>/', views.print_costumer_report, name="print_costumer_report"),
+    path('manager/manage_transactions/print_costumer_report/<int:costumer_id>/', views.print_costumer_report,
+         name="print_costumer_report"),
 
 
 

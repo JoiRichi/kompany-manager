@@ -46,6 +46,7 @@ class Product(models.Model):
     def get_product_details(self):
         details = {
             'product_name' : self.product_name,
+            'product_id': self.id,
             'date_created' : self.date_created,
             'product_sub_types' : ProductSubType.objects.filter(product =self),
 
@@ -64,7 +65,7 @@ class ProductSubType(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True)
     sub_type_name = models.CharField(max_length=300)
     price = models.FloatField(default=0)
-    last_price_changed_date = models.DateTimeField(default=datetime.now())
+    last_price_changed_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.sub_type_name
