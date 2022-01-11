@@ -8,8 +8,6 @@ from .forms import RegistrationForm, LoginForm
 from .models import CustomUser
 
 
-def homepage(request):
-    return render(request, 'index.html',{})
 
 
 
@@ -21,27 +19,6 @@ def logout_view(request):
 
 
 
-
-
-def teacher_dashboard(request):
-    context = {}
-
-    return render(request, 'teacher_dashboard.html', context)
-
-def student_signup(request):
-    form = RegistrationForm(request.POST or None)
-    if form.is_valid():
-        email = form.cleaned_data['email']
-        form.save()
-        user = CustomUser.objects.get_by_natural_key(email)
-        user.is_applicant = True
-        user.save()
-        return redirect('login')
-    context =  {'form': form,
-                'formtype':'Student Signup',
-
-                }
-    return render(request, "multipurpose.html",context)
 
 def loginpage(request):
     form= LoginForm(request.POST or None)
@@ -69,26 +46,3 @@ def loginpage(request):
         context = {'form': form}
         return render(request, 'login.html', context)
 
-
-
-
-
-def user_page(request):
-    user = request.user
-    '''if user.is_intern:
-        try:
-            return redirect('/intern')
-        except:
-            pass
-'''
-    if user.is_staff:
-        try:
-            return HttpResponseRedirect('/staff')
-        except:
-            pass
-
-    else:
-        try:
-            return HttpResponseRedirect('/student')
-        except:
-            pass

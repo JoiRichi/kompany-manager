@@ -51,6 +51,7 @@ body{
     bottom: -80px;
 }
 form{
+
     height: 520px;
     width: 400px;
     background-color: rgba(255,255,255,0.13);
@@ -139,6 +140,7 @@ button{
         <div class="shape"></div>
         <div class="shape"></div>
     </div>
+    <div style="display: flex;">
     <form method="post" action="{% url 'accounts:login' %}">
         {%csrf_token%}
 
@@ -154,7 +156,7 @@ button{
 
         <button>Log In</button>
 
-    </form>
+    </form></div>
 
 
 <script>
