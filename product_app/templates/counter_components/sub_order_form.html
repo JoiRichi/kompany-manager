@@ -1,9 +1,8 @@
-{%extends 'counter_staff_base.html'%}
 
-{%block content%}
 
-<turbo-frame id="create_order">
-    <style>
+<turbo-frame id="create_sub_order">
+    <turbo-frame id="create_sub_orde">
+      <style>
 input[type=text],input[type=number], select {
   width: 100%;
   padding: 12px 20px;
@@ -33,9 +32,7 @@ input[type=submit]:hover {
   background-color: #f2f2f2;
   padding: 20px;
 </style>
-
-
-        {% if messages %}
+            {% if messages %}
 <ul class="messages">
     {% for message in messages %}
     <li style="background-color:green;color:white" class="{{ message.tags }}">
@@ -43,17 +40,13 @@ input[type=submit]:hover {
     {% endfor %}
 </ul>
 {% endif %}
-                  <div class="form_frame">
+<form method="post" action="{%url 'product_app:create_sub_order' order.id%}">
 
-
-<form method="post" action="{%url 'product_app:create_costumers'%}">
     {%csrf_token%}
     {{form.as_p}}
+    <input type="submit">
 
-<input type="submit">
 </form>
-                  </div>
-
+</turbo-frame>
 
 </turbo-frame>
-{%endblock%}

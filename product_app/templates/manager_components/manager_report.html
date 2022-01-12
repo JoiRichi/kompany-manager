@@ -62,7 +62,7 @@ p{
 
               <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
                 <div class="rounded-t mb-0 px-4 py-3 border-0">
-                   <a class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" href="{%url 'product_app:manage_transactions'%}">Change date range</a>
+<p>printed: {{date}}</p>
                 </div>
                 <div class="relative w-full px-4 max-w-full flex-grow flex-1">
                     <h1 style="text-align:center" class="font-semibold text-base text-blueGray-900">
@@ -210,7 +210,6 @@ p{
 </table>
 </div> {%if orders|get_value:'error'%} <p style="font-color: red">{{ orders|get_value:'error' }}</p> {%endif%}
 </div></div>
- <a class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"target="_blank" href="{%url 'product_app:print_report' orders|get_value:'start_date' orders|get_value:'end_date'%}">re-print this report</a>
 
  </div>
             </turbo-frame></div>

@@ -1,39 +1,4 @@
-<turbo-frame id="create_order">
-        <style>
-input[type=text],input[type=number], select {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-input[type=submit] {
-  width: 100%;
-  background-color: #10233b;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-input[type=submit]:hover {
-  background-color: #214e8a;
-}
-.form_frame {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
-</style>
-
-              <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
-                <div class="rounded-t mb-0 px-4 py-3 border-0 form_frame">
-                    <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
-                        <turbo-frame id="create_sub_order">
+<turbo-frame id="create_sub_orde">
                        <div> Costumer name: {{order.costumer}}</div>
                         <div>Total Order Price: {{order.total_order_price}}  </div>
                          <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
@@ -72,18 +37,18 @@ input[type=submit]:hover {
                         </th>
 
                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                         N {{sub_order.quantity}}
+                         {{sub_order.quantity}}
                         </td>
                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          {{sub_order.buy_price}}
+                          N {{sub_order.buy_price}}
                         </td>
 
 
                           <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
 
 
-                  <a    href="{%url 'product_app:edit_sub_product' sub_product.id%}"  type="button" style="transition:all .15s ease; color:blue">
-                delete Sub Product
+                  <a    href="{%url 'product_app:delete_sub_order' sub_order.id%}"  type="button" style="transition:all .15s ease; color:blue">
+                remove Suborder
               </a>
                        </td>
 
@@ -97,35 +62,3 @@ input[type=submit]:hover {
                     </tbody>
 
                                           </table></turbo-frame>
-
-
-
-
-
-
-
-                    </div>
-
-
-
-
-
-            {% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li style="background-color:green;color:white" class="{{ message.tags }}">
-    {{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-<form method="post" action="{%url 'product_app:complete_order' order.id%}">
-
-    {%csrf_token%}
-    {{form.as_p}}
-    <input type="submit" >
-
-</form>
-
-              </div>
-</div>
-</turbo-frame>

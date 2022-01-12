@@ -1,5 +1,28 @@
 {% extends 'manager_base.html' %}
 {% block content %}
+
+<style>
+    @media screen and (max-width : 320px)
+{
+  .product
+  {
+    font:15px;
+  }
+  .time{
+  font:15px;
+  }
+}
+@media screen and (max-width : 1204px)
+{
+  .product
+  {
+    font:20px;
+  }
+  .time{
+  font:150px;
+  }
+}
+</style>
 <turbo-frame id="product_creation">
        <div class="flex flex-wrap items-center">
                 <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-left" style="padding:20px;margin-bottom:20px; ">
@@ -19,10 +42,10 @@
                     <turbo-frame id="{{ product|get_value:'product_id' }}-12345">
                   <div class="flex flex-wrap items-center">
                     <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-                      <h1 style="font-size: 1.5vw;" class="font-semibold text-base text-blueGray-900">
+                      <h1  class="font-semibold text-base text-blueGray-900 product" >
                           <strong>{{ product|get_value:'product_name' }}</strong>
                       </h1>
-                        <h5 style="font-size: 1.5vw;" class="font-semibold text-base text-blueGray-700">
+                        <h5 class="font-semibold text-base text-blueGray-700 time">
                       Date Created: {{ product|get_value:'date_created' }}
                       </h5>
                     </div>
@@ -110,25 +133,3 @@
 {% endblock %}
 
 
-    def get_product_details(self):
-        details = {
-            'product_name' : self.product_name,
-            'date_created' : self.date_created,
-            'product_sub_types' : ProductSubType.objects.filter(product =self),
-
-        }
-
-
-    def product_sub_type_details(self):
-        details ={
-            'product_sub_types': ProductSubType.objects.filter(product=self),
-
-        }
-
-
-
-class ProductSubType(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True)
-    sub_type_name = models.CharField(max_length=300)
-    price = models.FloatField(default=0)
-    last_price_changed_date = models.DateTimeField(auto_now=True)

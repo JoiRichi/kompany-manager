@@ -1,6 +1,35 @@
 {% extends 'manager_base.html' %}
 {% block content %}
+   <style>
+input[type=text],input[type=number], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
 
+.button {
+  width: 100%;
+  background-color: #10233b;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #214e8a;
+}
+.form_frame {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+</style>
 
         <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
             <turbo-frame id="hi">
@@ -151,7 +180,14 @@
 </table>
 </div> {%if orders|get_value:'error'%} <p style="font-color: red">{{ orders|get_value:'error' }}</p> {%endif%}
 </div></div>
- <a class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" target="_blank" href="{%url 'product_app:print_report' orders|get_value:'start_date' orders|get_value:'end_date'%}">print report</a>
+ <a class="button" style="width: 100%;
+  background-color: #10233b;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px; text-align: center;
+  cursor: pointer;" target="_blank" href="{%url 'product_app:print_report' orders|get_value:'start_date' orders|get_value:'end_date'%}">print report</a>
 
  </div>
             </turbo-frame></div>

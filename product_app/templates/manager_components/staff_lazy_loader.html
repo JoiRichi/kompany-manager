@@ -1,5 +1,13 @@
       <turbo-frame id="staff_lazy_loader" >
       <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li style="background-color:red;color:white" class="{{ message.tags }}">
+    {{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
@@ -86,7 +94,7 @@
       </div>
 
 <br>
-    <a href="{%url 'product_app:staff_creation'%}" style="margin:50px;background-color:#10233b; font-size:1.0vw;" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" >
+    <a href="{%url 'product_app:staff_creation'%}" style="margin:50px;background-color:#10233b; font-size:1.8vw;" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" >
       Create Staff
     </a>
 

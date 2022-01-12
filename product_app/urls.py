@@ -52,9 +52,10 @@ urlpatterns = [
              name="pay_debt"),
     path('counter_staff/create_costumers/', views.create_costumers, name="create_costumers"),
     path('counter_staff/', views.counter_dashboard, name="counter_dashboard"),
-
-
-
+    path('counter_staff/create_sub_order/<int:order_id>/', views.create_suborder, name="create_sub_order"),
+    path('counter_staff/delete_sub_order/<int:sub_order_id>/', views.delete_suborder, name="delete_sub_order"),
+    path('counter_staff/complete_order/<int:order_id>', views.complete_order, name="complete_order"),
+    path('counter_staff/complete_order/print_receipt/<int:order_id>', views.print_order_receipt, name="print_order_receipt"),
 
 
 
