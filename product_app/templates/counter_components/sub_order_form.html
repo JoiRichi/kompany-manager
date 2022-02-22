@@ -1,8 +1,6 @@
-
-
 <turbo-frame id="create_sub_order">
     <turbo-frame id="create_sub_orde">
-      <style>
+        <style>
 input[type=text],input[type=number], select {
   width: 100%;
   padding: 12px 20px;
@@ -31,22 +29,24 @@ input[type=submit]:hover {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
-</style>
-            {% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li style="background-color:green;color:white" class="{{ message.tags }}">
-    {{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-<form method="post" action="{%url 'product_app:create_sub_order' order.id%}">
 
-    {%csrf_token%}
-    {{form.as_p}}
-    <input type="submit">
+        </style>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li class="{{ message.tags }}" style="background-color:green;color:white">
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <form action="{%url 'product_app:create_sub_order' order.id%}" method="post">
 
-</form>
-</turbo-frame>
+            {%csrf_token%}
+            {{form.as_p}}
+            <input type="submit">
+
+        </form>
+    </turbo-frame>
 
 </turbo-frame>

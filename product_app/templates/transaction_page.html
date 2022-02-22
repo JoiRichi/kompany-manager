@@ -1,6 +1,6 @@
 {% extends 'manager_base.html' %}
 {% block content %}
-   <style>
+<style>
 input[type=text],input[type=number], select {
   width: 100%;
   padding: 12px 20px;
@@ -29,168 +29,180 @@ input[type=submit]:hover {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
+
 </style>
 
-        <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
-            <turbo-frame id="hi">
+<div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
+    <turbo-frame id="hi">
 
-              <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
-                <div class="rounded-t mb-0 px-4 py-3 border-0">
-                   <a class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" href="{%url 'product_app:manage_transactions'%}">Change date range</a>
-                </div>
-                <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-                      <h1 class="font-semibold text-base text-blueGray-900">
-                       from: {{ orders|get_value:'start_date' }}
-                      </h1>
-                        <h5 class="font-semibold text-base text-blueGray-700">
-                      to: {{ orders|get_value:'end_date' }}
-                      </h5>
-                    </div>
+        <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
+            <div class="rounded-t mb-0 px-4 py-3 border-0">
+                <a class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+                   href="{%url 'product_app:manage_transactions'%}">Change date range</a>
+            </div>
+            <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+                <h1 class="font-semibold text-base text-blueGray-900">
+                    from: {{ orders|get_value:'start_date' }}
+                </h1>
+                <h5 class="font-semibold text-base text-blueGray-700">
+                    to: {{ orders|get_value:'end_date' }}
+                </h5>
+            </div>
 
-              </div>
+        </div>
 
 
         <div class="flex flex-col">
             {%for product in products%}
-  <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
 
 
-                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-<h1 class="font-semibold bg-white text-base text-blueGray-900">
-                      {{ product.product_name }}
-                      </h1>
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                SubProductName
-              </th>
+                    <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                        <h1 class="font-semibold bg-white text-base text-blueGray-900">
+                            {{ product.product_name }}
+                        </h1>
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                    scope="col">
+                                    SubProductName
+                                </th>
 
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Total Piece Ordered
-              </th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Total Expected Income
-              </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Price/quantity sold
-              </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                    scope="col">
+                                    Total Piece Ordered
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                    scope="col">
+                                    Total Expected Income
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                    scope="col">
+                                    Price/quantity sold
+                                </th>
 
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-           {%for each_sub_product in sub_products_details%}
-        {%with sub_product=each_sub_product|get_value:'sub_product'%}
-           {%if sub_product.product == product%}
-            <tr>
+                            </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                            {%for each_sub_product in sub_products_details%}
+                            {%with sub_product=each_sub_product|get_value:'sub_product'%}
+                            {%if sub_product.product == product%}
+                            <tr>
 
-              <th class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
+                                <th class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
 
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      {{each_sub_product|get_value:'sub_product'}}
-                    </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">
+                                                {{each_sub_product|get_value:'sub_product'}}
+                                            </div>
 
-                  </div>
-                </div>
-              </th>
+                                        </div>
+                                    </div>
+                                </th>
 
-              <td class="px-6 py-4 whitespace-nowrap">
+                                <td class="px-6 py-4 whitespace-nowrap">
                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                     {{each_sub_product|get_value:'total_piece_ordered'}}
                 </span>
 
-              </td>
+                                </td>
 
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {{each_sub_product|get_value:'total_expected_income'}}
-              </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {%with price_list=each_sub_product|get_value:'price_list'%}
-                    {%with final_list=price_list|analyze_nested_list:'0'%}
-                    {%for each in final_list%}
-                    <p>{{each}}</p>
-                    {%endfor%}
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {{each_sub_product|get_value:'total_expected_income'}}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {%with price_list=each_sub_product|get_value:'price_list'%}
+                                    {%with final_list=price_list|analyze_nested_list:'0'%}
+                                    {%for each in final_list%}
+                                    <p>{{each}}</p>
+                                    {%endfor%}
 
-                    {%endwith%}{%endwith%}
-              </td>
-
-
-            </tr>
-           {%endif%}
-           {%endwith%}
-          {%endfor%}
-
-            <!-- More people... -->
-          </tbody>
-        </table>
+                                    {%endwith%}{%endwith%}
+                                </td>
 
 
-      </div>
+                            </tr>
+                            {%endif%}
+                            {%endwith%}
+                            {%endfor%}
 
-    </div>
-  </div>
+                            <!-- More people... -->
+                            </tbody>
+                        </table>
+
+
+                    </div>
+
+                </div>
+            </div>
             {%endfor%}
         </div>
 
 
- <div class="flex flex-col">
-<div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-<div class="py-2 align-middle inline-block min-w-full bg-white sm:px-6 lg:px-8">
-<div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-     <table class="min-w-full divide-y divide-gray-200">
-<thead>
-  <tr>
-    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-      Total Order Price
-    </th>
-    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-     Total Fund Received
-    </th>
-    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-     Total Discount Given
-    </th>
-      <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-     Total Outstanding Funds
-    </th>
+        <div class="flex flex-col">
+            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="py-2 align-middle inline-block min-w-full bg-white sm:px-6 lg:px-8">
+                    <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead>
+                            <tr>
+                                <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    Total Order Price
+                                </th>
+                                <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    Total Fund Received
+                                </th>
+                                <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    Total Discount Given
+                                </th>
+                                <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    Total Outstanding Funds
+                                </th>
 
-  </tr>
-</thead>
-<tbody>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-  <tr>
-    <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-       {{ orders|get_value:'c_total_order_price' }}
-    </th>
-    <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-      {{ orders|get_value:'total_funds_received' }}
-    </td>
-    <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-      {{ orders|get_value:'total_discount' }}
-    </td>
-      <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-      {{ orders|get_value:'total_outstanding_funds' }}
-    </td>
+                            <tr>
+                                <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                                    {{ orders|get_value:'c_total_order_price' }}
+                                </th>
+                                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    {{ orders|get_value:'total_funds_received' }}
+                                </td>
+                                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    {{ orders|get_value:'total_discount' }}
+                                </td>
+                                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    {{ orders|get_value:'total_outstanding_funds' }}
+                                </td>
 
-  </tr>
+                            </tr>
 
-</tbody>
-</table>
-</div> {%if orders|get_value:'error'%} <p style="font-color: red">{{ orders|get_value:'error' }}</p> {%endif%}
-</div></div>
- <a class="button" style="width: 100%;
+                            </tbody>
+                        </table>
+                    </div>
+                    {%if orders|get_value:'error'%} <p style="font-color: red">{{ orders|get_value:'error' }}</p>
+                    {%endif%}
+                </div>
+            </div>
+            <a class="button" href="{%url 'product_app:print_report' orders|get_value:'start_date' orders|get_value:'end_date'%}" style="width: 100%;
   background-color: #10233b;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
   border-radius: 4px; text-align: center;
-  cursor: pointer;" target="_blank" href="{%url 'product_app:print_report' orders|get_value:'start_date' orders|get_value:'end_date'%}">print report</a>
+  cursor: pointer;"
+               target="_blank">print
+                report</a>
 
- </div>
-            </turbo-frame></div>
+        </div>
+    </turbo-frame>
+</div>
 
 {% endblock %}
 

@@ -3,7 +3,7 @@
 {%block content%}
 
 
-         <style>
+<style>
 input[type=text],input[type=number], select {
   width: 100%;
   padding: 12px 20px;
@@ -32,15 +32,15 @@ input[type=submit]:hover {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
+
 </style>
 
-              <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
-                <div class="rounded-t mb-0 px-4 py-3 border-0 form_frame">
+<div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
+    <div class="rounded-t mb-0 px-4 py-3 border-0 form_frame">
 
 
-
-<turbo-frame id="create_order">
-      <style>
+        <turbo-frame id="create_order">
+            <style>
 input[type=text],input[type=number], select {
   width: 100%;
   padding: 12px 20px;
@@ -69,30 +69,33 @@ input[type=submit]:hover {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
-</style>
+
+            </style>
             {% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li style="background-color:green;color:white" class="{{ message.tags }}">
-    {{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-       {% if order %}
-<p style="background-color:green;color:white">Your order was successful, print the receipt <a style="color:blue" target="_blank" href="{%url 'product_app:print_order_receipt' order.id%}">here</a></p>
-{% endif %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="{{ message.tags }}" style="background-color:green;color:white">
+                    {{ message }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% if order %}
+            <p style="background-color:green;color:white">Your order was successful, print the receipt <a
+                    href="{%url 'product_app:print_order_receipt' order.id%}" style="color:blue"
+                    target="_blank">here</a></p>
+            {% endif %}
 
-<form method="post" action="{%url 'product_app:counter_dashboard'%}">
+            <form action="{%url 'product_app:counter_dashboard'%}" method="post">
 
-    {%csrf_token%}
-    {{form.as_p}}
-    <input type="submit">
+                {%csrf_token%}
+                {{form.as_p}}
+                <input type="submit">
 
-</form>
-</turbo-frame>
-              </div>
+            </form>
+        </turbo-frame>
+    </div>
 </div>
-
 
 
 {%endblock%}

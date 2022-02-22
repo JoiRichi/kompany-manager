@@ -22,113 +22,118 @@
   font:150px;
   }
 }
+
 </style>
 <turbo-frame id="product_creation">
-       <div class="flex flex-wrap items-center">
-                <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-left" style="padding:20px;margin-bottom:20px; ">
-                  <a href="{%url 'product_app:create_product'%}" class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1" type="button" style="transition:all .15s ease; background-color:#10233b">
-                    Create Product
-                  </a>
-                </div>
-              </div>
+    <div class="flex flex-wrap items-center">
+        <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-left"
+             style="padding:20px;margin-bottom:20px; ">
+            <a class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
+               href="{%url 'product_app:create_product'%}"
+               style="transition:all .15s ease; background-color:#10233b" type="button">
+                Create Product
+            </a>
+        </div>
+    </div>
 
-{%for product in products%}
-        <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
+    {%for product in products%}
+    <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
 
-              <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
-                <div class="rounded-t mb-0 px-4 py-3 border-0">
+        <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
+            <div class="rounded-t mb-0 px-4 py-3 border-0">
 
 
-                    <turbo-frame id="{{ product|get_value:'product_id' }}-12345">
-                  <div class="flex flex-wrap items-center">
-                    <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-                      <h1  class="font-semibold text-base text-blueGray-900 product" >
-                          <strong>{{ product|get_value:'product_name' }}</strong>
-                      </h1>
-                        <h5 class="font-semibold text-base text-blueGray-700 time">
-                      Date Created: {{ product|get_value:'date_created' }}
-                      </h5>
+                <turbo-frame id="{{ product|get_value:'product_id' }}-12345">
+                    <div class="flex flex-wrap items-center">
+                        <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+                            <h1 class="font-semibold text-base text-blueGray-900 product">
+                                <strong>{{ product|get_value:'product_name' }}</strong>
+                            </h1>
+                            <h5 class="font-semibold text-base text-blueGray-700 time">
+                                Date Created: {{ product|get_value:'date_created' }}
+                            </h5>
+                        </div>
+                        <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
+                            <a class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
+                               href="{%url 'product_app:edit_product' product|get_value:'product_id'%}"
+                               style="transition:all .15s ease;background-color: #214e8a; color:white; font-size:10px"
+                               type="button">
+                                Edit Product
+                            </a>
+                        </div>
                     </div>
-                    <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-                      <a href="{%url 'product_app:edit_product' product|get_value:'product_id'%}" style="transition:all .15s ease;background-color: #214e8a; color:white; font-size:10px" class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1" type="button" >
-                        Edit Product
-                      </a>
-                    </div>
-                  </div>
-                        </turbo-frame>
-                </div>
-                    <turbo-frame id="create_subtype-{{ product|get_value:'product_id' }}">
+                </turbo-frame>
+            </div>
+            <turbo-frame id="create_subtype-{{ product|get_value:'product_id' }}">
                 <div class="block w-full overflow-x-auto">
-                  <!-- Projects table -->
-                  <table class="items-center w-full bg-transparent border-collapse">
-                    <thead>
-                      <tr>
-                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                          Sub Product Name
-                        </th>
-                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                          Fixed Price
-                        </th>
-                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                          Last price change date
-                        </th>
-                          <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                    <!-- Projects table -->
+                    <table class="items-center w-full bg-transparent border-collapse">
+                        <thead>
+                        <tr>
+                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                Sub Product Name
+                            </th>
+                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                Fixed Price
+                            </th>
+                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                Last price change date
+                            </th>
+                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
 
-                        </th>
+                            </th>
 
-                      </tr>
-                    </thead>
-                    <tbody>
-                    {%for sub_product in product|get_value:'product_sub_types'%}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {%for sub_product in product|get_value:'product_sub_types'%}
 
-                      <tr>
-
-
-
-                        <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                           {{sub_product.sub_type_name}}
-                        </th>
-
-                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                         N {{sub_product.price}}
-                        </td>
-                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          {{sub_product.last_price_changed_date}}
-                        </td>
+                        <tr>
 
 
-                          <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                            <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                                {{sub_product.sub_type_name}}
+                            </th>
+
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                N {{sub_product.price}}
+                            </td>
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                {{sub_product.last_price_changed_date}}
+                            </td>
 
 
-                  <a    href="{%url 'product_app:edit_sub_product' sub_product.id%}"  type="button" style="transition:all .15s ease; color:blue">
-                Edit Sub Product
-              </a>
-                       </td>
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
 
 
+                                <a href="{%url 'product_app:edit_sub_product' sub_product.id%}" style="transition:all .15s ease; color:blue"
+                                   type="button">
+                                    Edit Sub Product
+                                </a>
+                            </td>
 
-                      </tr>
+
+                        </tr>
 
 
-                    {%endfor%}
+                        {%endfor%}
 
-                    </tbody>
+                        </tbody>
 
-                  </table>
+                    </table>
                 </div>
-                      <a href="{%url 'product_app:create_sub_product' product|get_value:'product_id'%}"  type="button"
-                         style="transition:all .15s ease;background-color: #214e8a; color:white; font-size:10px">
-                        Add Sub Product
-                      </a>
+                <a href="{%url 'product_app:create_sub_product' product|get_value:'product_id'%}" style="transition:all .15s ease;background-color: #214e8a; color:white; font-size:10px"
+                   type="button">
+                    Add Sub Product
+                </a>
 
-                        </turbo-frame>
-              </div>
+            </turbo-frame>
+        </div>
 
-              </div>
+    </div>
 
 
-
-{%endfor%}
+    {%endfor%}
 </turbo-frame>
 {% endblock %}
 

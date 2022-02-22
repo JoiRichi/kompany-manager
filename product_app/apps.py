@@ -7,3 +7,4 @@ class ProductAppConfig(AppConfig):
 
     def ready(self):
         import product_app.signals
+

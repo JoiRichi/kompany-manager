@@ -1,5 +1,4 @@
-
-    <style>
+<!--<style>
 
 p{
 
@@ -47,119 +46,261 @@ p{
     font-size: 20px;
 }
 
-    </style>
-        <table class="min-w-full divide-y divide-gray-200 styled-table">
-          time printed: {{date}}
-          <thead class="bg-gray-50">
-            <tr>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Costumer Name
-              </th>
-             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Issuer's Name
-                          </th>
 
-          <tbody class="bg-white divide-y divide-gray-200">
-            <tr>
+</style>
+<table class="min-w-full divide-y divide-gray-200 styled-table">
+    time printed: {{date}}
+    <thead class="bg-gray-50">
+    <tr>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" scope="col">
+            customer Name
+        </th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" scope="col">
+            Issuer's Name
+        </th>
 
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
+    <tbody class="bg-white divide-y divide-gray-200">
+    <tr>
 
-                  <div class="ml-4">
+        <td class="px-6 py-4 whitespace-nowrap">
+            <div class="flex items-center">
+
+                <div class="ml-4">
                     <div class="text-sm font-medium text-gray-900">
-                      {{order.costumer}}
+                        {{order.customer}}
                     </div>
 
-                  </div>
                 </div>
-              </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex items-center">
+            </div>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap">
+            <div class="flex items-center">
 
-                              <div class="ml-4">
-                                <div class="text-sm font-medium text-gray-900">
-                                  {{order.counter_staff}}
-                                </div>
-
-                              </div>
-                            </div>
-                          </td>
-
-
-
-            </tr>
-
-            <!-- More people... -->
-          </tbody>
-
-          <thead class="bg-gray-50">
-            <tr>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Order Date
-              </th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-               Order Description
-              </th>
-
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Items Bought
-              </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Total Order Price
-              </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Deposit
-              </th>
-                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Discount
-              </th>
-               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Balance
-              </th>
-
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-
-            <tr>
-
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-
-                  <div class="ml-4">
+                <div class="ml-4">
                     <div class="text-sm font-medium text-gray-900">
-                      {{order.date_created}}
+                        {{order.counter_staff.profile}}
                     </div>
 
-                  </div>
                 </div>
-              </td>
-
-              <td class="px-6 py-4 whitespace-nowrap">
-                  {{order.order_description}}
-
-              </td>
-
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {%for sub_order in order.suborder_set.all %} {{sub_order}} <br>{%endfor%}
-              </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {{order.total_order_price}}
-              </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {{order.deposit}}
-                </td>
-               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {{order.discount}}
-                </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-red-500">
-                {{order.balance}}
-                </td>
+            </div>
+        </td>
 
 
+    </tr>
 
-            </tr>
 
-            <!-- More people... -->
-          </tbody>
-        </table>
+    </tbody>
+
+    <thead class="bg-gray-50">
+    <tr>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" scope="col">
+            Order Date
+        </th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" scope="col">
+            Order Description
+        </th>
+
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" scope="col">
+            Items Bought
+        </th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" scope="col">
+            Total Order Price
+        </th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" scope="col">
+            Deposit
+        </th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" scope="col">
+            Discount
+        </th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" scope="col">
+            Balance
+        </th>
+
+    </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+
+    <tr>
+
+        <td class="px-6 py-4 whitespace-nowrap">
+            <div class="flex items-center">
+
+                <div class="ml-4">
+                    <div class="text-sm font-medium text-gray-900">
+                        {{order.date_created}}
+                    </div>
+
+                </div>
+            </div>
+        </td>
+
+        <td class="px-6 py-4 whitespace-nowrap">
+            {{order.order_description}}
+
+        </td>
+
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            {%for sub_order in order.suborder_set.all %} {{sub_order}} <br>{%endfor%}
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            {{order.total_order_price}}
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            {{order.deposit}}
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            {{order.discount}}
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-red-500">
+            {{order.balance}}
+        </td>
+
+
+    </tr>
+
+    </tbody>
+</table> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt</title>
+</head>
+<body>
+
+  <div id="invoice-POS">
+
+    <center id="top">
+      <div class="logo"></div>
+      <div class="info">
+        <h2 style="text-align: left">Crystal Danak</h2>
+      </div><!--End Info-->
+    </center><!--End InvoiceTop-->
+
+    <div id="mid">
+      <div class="info">
+        <p> <strong style="font-weight: 20px; font-color: black">Company Contact Info</strong> <br> <br>
+            <strong>Address:</strong> 60, Ladipo Str., Mushin, Lagos.<br>
+            <strong>Email:</strong> crystaldanak@gmail.com<br>
+            <strong>Phone:</strong> 081-771-29776, 070-508-75446<br>
+        Customer Contact Info<br>
+
+            <strong>Customer ID:</strong> {{order.customer}}
+
+        <br><br><br>
+
+
+
+        Transaction Info <br>
+            <strong>Job Name:</strong> {{order.job_name}} <br>
+
+ {%for sub_order in order.suborder_set.all %}
+
+
+                                <strong>Product Name:</strong> {{sub_order.product_ordered}} <br>
+
+                                {% if sub_order.order != 'Large Format' %}
+                                <strong>Size:</strong> {{sub_order.length}} by {{sub_order.breadth}}, {%endif%}
+                                <strong>Qty:</strong> {{sub_order.quantity}} <br>
+
+                                <strong>Cost:</strong>N {{sub_order.sub_order_total}} <br>
+                            </p>
+                        {%endfor%}
+
+                        <h2>
+                            <strong>Total: </strong>N {{order.total_order_price}} <br>
+                            <strong>Deposit: </strong>N {{order.deposit}} <br>
+                            <strong>Discount: </strong>N {{order.discount}} <br>
+                            {%if order.balance < 0%}
+                            <strong>Credit: </strong>N {{order.balance}} <br>
+                            {%else%}
+                            <strong>Balance: </strong>N {{order.balance}} <br>
+                            {%endif%}
+
+                            </h2><br><br>
+
+
+						<p class="legal"><strong>Thank you for your business!</strong>  <br>Printed: {{date}} </p>
+
+
+				</div><!--End InvoiceBot-->
+  </div><!--End Invoice-->
+  </div>
+</body>
+
+<style>
+    #invoice-POS{
+
+  padding:2mm;
+  margin: 0 auto;
+  width: 44mm;
+  background: #FFF;
+    }
+
+
+::selection { background: #f31544; color:#fff;}
+::moz-selection {background: #f31544; color: #FFF;}
+h1{
+  font-size: 1.5em;
+  color: #222;
+}
+h2{font-size: .9em;}
+h3{
+  font-size: 1.2em;
+  font-weight: 300;
+  line-height: 2em;
+}
+p{
+  font-size: .7em;
+  color: #000;
+  line-height: 1.2em;
+}
+
+
+
+#top{min-height: 100px;}
+#mid{min-height: 80px;}
+#bot{ min-height: 50px;}
+
+#top .logo{
+  float: left;
+	height: 60px;
+	width: 60px;
+	background: url(http://michaeltruong.ca/images/logo1.png) no-repeat;
+	background-size: 60px 60px;
+}
+.clientlogo{
+  float: left;
+	height: 60px;
+	width: 60px;
+	background: url(http://michaeltruong.ca/images/client.jpg) no-repeat;
+	background-size: 60px 60px;
+  border-radius: 50px;
+}
+.info{
+  display: block;
+  float:left;
+  margin-left: 0;
+}
+.title{
+  float: right;
+}
+.title p{text-align: right;}
+
+.service{border-bottom: 1px solid #EEE;}
+.item{width: 24mm;}
+.itemtext{font-size: .5em;}
+
+#legalcopy{
+
+}
+
+
+
+
+</style>
+
+</html>
+

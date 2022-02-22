@@ -10,23 +10,22 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'django-insecure-88$h1y*ws_nt3k6q$lzvi868*gb$+ywv2hcu1czloi83$-9u2#'
+SECRET_KEY = 'django-insecure-88$h1y*ws_nt3k6q$lzvi868*gb$+ywv2hcu1czloi83$-9u2#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://kompany-management-app.herokuapp.com/',  '127.0.0.1']
-
+ALLOWED_HOSTS = ['https://kompany-management-app.herokuapp.com/', '127.0.0.1']
 
 # Application definition
 
@@ -40,7 +39,7 @@ INSTALLED_APPS = [
     'accounts',
     'product_app',
     'turbo',
-    #'product_app.apps.ProductAppConfig',
+    # 'product_app.apps.ProductAppConfig',
 ]
 
 MIDDLEWARE = [
@@ -73,7 +72,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'company_manager.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
@@ -83,7 +81,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -103,17 +100,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
@@ -128,12 +122,11 @@ STATICFILES_DIRS = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
-
-ACCOUNT_AUTHENTICATION_METHOD= ("email")
-TIME_ZONE ='Africa/Lagos'
+ACCOUNT_AUTHENTICATION_METHOD = ("email")
+TIME_ZONE = 'Africa/Lagos'
 LOGOUT_REDIRECT_URL = 'login/'
 import django_heroku
+
 django_heroku.settings(locals())

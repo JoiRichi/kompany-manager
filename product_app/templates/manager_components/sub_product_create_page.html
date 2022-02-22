@@ -1,5 +1,5 @@
 <turbo-frame id="create_subtype-{{product.id}}">
-   <style>
+    <style>
 input[type=text],input[type=number], select {
   width: 100%;
   padding: 12px 20px;
@@ -28,13 +28,15 @@ input[type=submit]:hover {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
-</style>
-<div class="form_frame">
-    <form method="post" action="{%url 'product_app:create_sub_product' product.id%}">
-        {%csrf_token%}
-        {{form.as_p}}
-        <input type="submit">
-    </form>
-</div>
+
+    </style>
+    <div class="form_frame">
+        <form action="{%url 'product_app:create_sub_product' product.id%}" method="post">
+            {%csrf_token%}
+            {{form.as_p}}
+            <input type="submit">
+        </form>
+        <input type="button">
+    </div>
 
 </turbo-frame>

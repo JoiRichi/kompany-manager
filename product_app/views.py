@@ -1,25 +1,25 @@
-from datetime import datetime
-from .forms import UserForm, ProductForm, ProductSubTypeForm, CostumerForm, SubOrderForm
-from django.contrib import messages
-from django.shortcuts import render, redirect, HttpResponse
-from decorators import  manager_required, counter_staff_required
-from django.urls import reverse
-from django.core.exceptions import ObjectDoesNotExist
-from accounts.models import CustomUser,Profile
-from .models import Product, ProductSubType, Costumer, Order, SubOrder
-from .forms import OrderQueryForm, OrderForm, OrderEditForm
-from django.template.defaulttags import register
-from.models import get_product_details_based_on_date, get_orders_based_on_date
-from .pdfs import render_to_pdf, render_pdf_view
-from django.utils.dateparse import  parse_datetime
+from datetime import datetime, timedelta
 
+from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import render, redirect
+from django.template.defaulttags import register
+from django.urls import reverse
+from django.utils.dateparse import parse_datetime
+
+from accounts.models import CustomUser, Profile
+from decorators import manager_required, counter_staff_required
+from .forms import OrderQueryForm, OrderForm, OrderEditForm, OrderQueryStaffForm
+from .forms import UserForm, ProductForm, ProductSubTypeForm, CustomerForm, SubOrderForm
+from .models import Product, ProductSubType, Customer, Order, SubOrder, get_product_details_based_on_date_and_staff
+from .models import get_product_details_based_on_date, get_orders_based_on_date, get_orders_based_on_date_and_staff
+from .pdfs import render_pdf_view
 from .tests import affirm_order_balance
 
 
 @register.filter
 def get_value(dictionary, key):
     return dictionary.get(key)
-
 
 
 @register.filter
@@ -31,17 +31,11 @@ def analyze_nested_list(the_list, num='0'):
     return final_list
 
 
-
-
 @register.filter
 def get_value_and_relation(dictionary, key):
-    s= dictionary.get(key)
-    b= s.product
-    return  b
-
-
-
-
+    s = dictionary.get(key)
+    b = s.product
+    return b
 
 
 @manager_required()
@@ -49,16 +43,16 @@ def print_report(request, start_date, end_date):
     orders = get_orders_based_on_date(parse_datetime(start_date), parse_datetime(end_date))
     sub_products_details = get_product_details_based_on_date(parse_datetime(start_date), parse_datetime(end_date))
     products = Product.objects.all()
-    context ={'orders': orders, 'products': products,
-             'sub_products_details': sub_products_details, 'date' : datetime.now()}
+    context = {'orders': orders, 'products': products,
+               'sub_products_details': sub_products_details, 'date': datetime.now()}
     return render_pdf_view(request, 'manager_components/manager_report.html', context,
                            "{}--{}-report".format(parse_datetime(start_date), parse_datetime(end_date)))
 
 
 @manager_required()
-def print_costumer_report(request, costumer_id):
-    costumer = Costumer.objects.get(id = costumer_id)
-    orders = Order.objects.filter(costumer=costumer).order_by("date_created")
+def print_customer_report(request, customer_id):
+    customer = Customer.objects.get(id=customer_id)
+    orders = Order.objects.filter(customer=customer, order_completed = True).order_by("date_created")
     c_total_order_price = 0
     total_discount = 0
     total_funds_received = 0
@@ -72,19 +66,19 @@ def print_costumer_report(request, costumer_id):
     outstanding_orders = orders.filter(paid_fully=False)
     printed_date = datetime.now()
     context = {'orders': orders, 'outstanding_orders': outstanding_orders,
-               'printed_date':printed_date, 'costumer':costumer,
-              'c_total_order_price':c_total_order_price,
+               'printed_date': printed_date, 'customer': customer,
+               'c_total_order_price': c_total_order_price,
                'total_discount': total_discount,
-                'total_funds_received': total_funds_received,
-                'total_outstanding_funds': total_outstanding_funds,
-    }
-    return render_pdf_view(request, 'manager_components/manager_costumer_report.html', context,
-                           "{}-report".format(costumer))
+               'total_funds_received': total_funds_received,
+               'total_outstanding_funds': total_outstanding_funds,
+               }
+    return render_pdf_view(request, 'manager_components/manager_customer_report.html', context,
+                           "{}-report".format(customer))
 
 
 @counter_staff_required()
 def pay_debt(request, order_id):
-    order = Order.objects.get(id = order_id)
+    order = Order.objects.get(id=order_id)
     order.deposit = order.balance + order.deposit
     order.balance = 0
     order.paid_fully = True
@@ -92,22 +86,20 @@ def pay_debt(request, order_id):
     return redirect(reverse("product_app:manage_debtors"))
 
 
-
-
-
 @counter_staff_required()
 def create_suborder(request, order_id):
     order = Order.objects.get(id=order_id)
     form = SubOrderForm(request.POST or None)
     if form.is_valid():
-        a= form.save(commit=False)
+        a = form.save(commit=False)
         a.order = order
         a.save()
-        return render(request, 'counter_components/subtable.html', {'form':form, 'order':order})
+        return render(request, 'counter_components/subtable.html', {'form': form, 'order': order})
     else:
-        return render(request, 'counter_components/sub_order_form.html', {'form':form, 'order':order})
+        return render(request, 'counter_components/sub_order_form.html', {'form': form, 'order': order})
 
 
+@counter_staff_required()
 def delete_suborder(request, sub_order_id):
     sub_order = SubOrder.objects.get(id=sub_order_id)
     order = sub_order.order
@@ -115,19 +107,15 @@ def delete_suborder(request, sub_order_id):
     return render(request, 'counter_components/subtable.html', {'order': order})
 
 
-
-
-
-
 @manager_required()
 def manager_dashboard(request):
-    return render(request, 'manager_base.html',{})
+    return render(request, 'manager_base.html', {})
 
 
 @manager_required()
 def staff_creation_page(request):
     all_staff = CustomUser.objects.all()
-    return render(request, 'manager_components/staff_manager.html', {'all_staff':all_staff})
+    return render(request, 'manager_components/staff_manager.html', {'all_staff': all_staff})
 
 
 @manager_required()
@@ -135,33 +123,68 @@ def product_management_page(request):
     products = Product.objects.all()
     products = [product.get_product_details() for product in products]
 
-    return render(request, 'product_page.html', {"products":products})
+    return render(request, 'product_page.html', {"products": products})
 
 
 @manager_required()
-def costumer_management_page(request):
-    costumers = Costumer.objects.all()
+def customer_management_page(request):
+    customers = Customer.objects.all()
 
-    return render(request, 'costumer_page.html', {"costumers":costumers})
+    return render(request, 'customer_page.html', {"customers": customers})
 
 
 @manager_required()
 def get_orders_based_on_date_func(request):
     form = OrderQueryForm(request.POST or None)
     if form.is_valid():
-        print('form is valid')
         start_date = form.cleaned_data['start_date']
         end_date = form.cleaned_data['end_date']
-        #orders = Order.objects.filter(date_created__range=[start_date, end_date]).filter(order_completed=True)
+        # orders = Order.objects.filter(date_created__range=[start_date, end_date]).filter(order_completed=True)
         orders = get_orders_based_on_date(start_date, end_date)
         sub_products_details = get_product_details_based_on_date(start_date, end_date)
         products = Product.objects.all()
-        return render(request, 'transaction_page.html', {'orders':orders,
-                                                         'products':products, 'sub_products_details': sub_products_details})
-    print('form invalid')
-    return render(request, 'transactions_page.html', {'form':form})
+        return render(request, 'transaction_page.html', {'orders': orders,
+                                                         'products': products,
+                                                         'sub_products_details': sub_products_details})
+    return render(request, 'transactions_page.html', {'form': form})
 
-    #Sample.objects.filter(date__range=["2011-01-01", "2011-01-31"])
+    # Sample.objects.filter(date__range=["2011-01-01", "2011-01-31"])
+
+def staff_history_page(request):
+    form = OrderQueryStaffForm(request.POST or None)
+    return render(request, 'manager_components/staff_report.html', {'form': form})
+
+
+@manager_required()
+def get_orders_based_on_date_and_staff_func(request):
+    form = OrderQueryStaffForm(request.POST or None)
+    if form.is_valid():
+        start_date = form.cleaned_data['start_date']
+        end_date = form.cleaned_data['end_date']
+        staff = form.cleaned_data['staff']
+        # orders = Order.objects.filter(date_created__range=[start_date, end_date]).filter(order_completed=True)
+        orders = get_orders_based_on_date_and_staff(start_date, end_date, staff.id)
+        sub_products_details = get_product_details_based_on_date_and_staff(start_date, end_date, staff.id)
+        products = Product.objects.all()
+        return render(request, 'manager_components/staff_report_page.html', {'orders': orders,
+                                                                             'staff': staff,
+                                                         'products': products,
+                                                         'sub_products_details': sub_products_details})
+    return render(request, 'manager_components/staff_report.html', {'form': form})
+
+
+
+
+def staff_history_page_lazy(request, start_date, end_date,  staff_id):
+    staff = CustomUser.objects.get(id=staff_id)
+    orders = Order.objects.filter(date_created__range=[parse_datetime(start_date),parse_datetime(end_date) + timedelta(days=1)]).filter(
+        order_completed=True, counter_staff=staff)
+    return render(request, 'manager_components/staff_report_lazy_loader.html', {'orders': orders,
+                                                                         'staff': staff,
+                                                                        })
+
+
+
 
 @manager_required()
 def suspend(request, staff_id):
@@ -169,6 +192,7 @@ def suspend(request, staff_id):
     staff.is_suspended = True
     staff.save()
     return redirect(reverse('product_app:staff_lazy_loader'))
+
 
 @manager_required()
 def pardon(request, staff_id):
@@ -178,11 +202,11 @@ def pardon(request, staff_id):
     return redirect(reverse('product_app:staff_lazy_loader'))
 
 
-
 @manager_required()
 def staff_lazy_page(request):
     all_staff = CustomUser.objects.all().exclude(is_superuser=True)
-    return render(request, 'manager_components/staff_lazy_loader.html', {'all_staff':all_staff})
+    return render(request, 'manager_components/staff_lazy_loader.html', {'all_staff': all_staff})
+
 
 @manager_required()
 def new_staff_creation(request):
@@ -190,19 +214,18 @@ def new_staff_creation(request):
     if form1.is_valid():
         form1.save()
 
-    return render(request, 'manager_components/staff_creation.html', {'form1':form1})
-
+    return render(request, 'manager_components/staff_creation.html', {'form1': form1})
 
 
 @manager_required()
 def product_edit_page(request, product_id):
-    product = Product.objects.get(id = product_id)
-    form = ProductForm(request.POST or None,instance=product)
+    product = Product.objects.get(id=product_id)
+    form = ProductForm(request.POST or None, instance=product)
     if form.is_valid():
         form.save()
         return redirect(reverse('product_app:manage_product'))
     else:
-        return render(request, 'manager_components/product_edit_page.html', {'form': form, 'product':product})
+        return render(request, 'manager_components/product_edit_page.html', {'form': form, 'product': product})
 
 
 @manager_required()
@@ -215,37 +238,35 @@ def create_product(request):
         return render(request, 'manager_components/create_product.html', {'form': form})
 
 
-
-
 @manager_required()
 def sub_product_edit_page(request, sub_product_id):
-    sub_product = ProductSubType.objects.get(id = sub_product_id)
-    form = ProductSubTypeForm(request.POST or None,instance=sub_product)
+    sub_product = ProductSubType.objects.get(id=sub_product_id)
+    form = ProductSubTypeForm(request.POST or None, instance=sub_product)
     if form.is_valid():
         form.save()
         return redirect(reverse('product_app:manage_product'))
     else:
-        return render(request, 'manager_components/sub_product_edit_page.html', {'form': form, 'sub_product':sub_product})
+        return render(request, 'manager_components/sub_product_edit_page.html',
+                      {'form': form, 'sub_product': sub_product})
+
 
 @manager_required()
 def create_sub_product(request, product_id):
-    product = Product.objects.get(id = product_id)
+    product = Product.objects.get(id=product_id)
     form = ProductSubTypeForm(request.POST or None)
     if form.is_valid():
-        a= form.save(commit=False)
+        a = form.save(commit=False)
         a.product = product
         a.save()
         return redirect(reverse('product_app:manage_product'))
     else:
-        return render(request, 'manager_components/sub_product_create_page.html', {'form': form, 'product':product})
+        return render(request, 'manager_components/sub_product_create_page.html', {'form': form, 'product': product})
 
-
-
-
+@counter_staff_required()
 def complete_order(request, order_id):
-    form = OrderEditForm(request.POST or None, instance= Order.objects.get(id=order_id))
+    form = OrderEditForm(request.POST or None, instance=Order.objects.get(id=order_id))
     if form.is_valid():
-        a=form.save(commit=False)
+        a = form.save(commit=False)
         a.counter_staff = request.user
         a.order_completed = True
         a.balance = a.total_order_price - (a.deposit + a.discount)
@@ -254,19 +275,14 @@ def complete_order(request, order_id):
         affirm_order_balance(a)
         a.save()
         form = OrderForm(request.POST or None)
-        return render(request, 'create_order.html', {'form':form, 'order':a})
+        return render(request, 'create_order.html', {'form': form, 'order': a})
     return redirect(reverse('product_app:counter_dashboard'))
 
-
-
+@counter_staff_required()
 def print_order_receipt(request, order_id):
     order = Order.objects.get(id=order_id)
     return render_pdf_view(request, 'counter_components/order_receipt.html',
-                           {'order': order, 'date': datetime.now()}, '{}-{}'.format(order.costumer, datetime.now()))
-
-
-
-
+                           {'order': order, 'date': datetime.now()}, '{}-{}'.format(order.customer, datetime.now()))
 
 
 @counter_staff_required()
@@ -276,38 +292,33 @@ def counter_dashboard(request):
         order = form.save()
         form = OrderEditForm(request.POST or None, instance=order)
 
-        return (render(request, 'counter_components/add_suborders.html', {'form':form, 'order':order}))
+        return (render(request, 'counter_components/add_suborders.html', {'form': form, 'order': order}))
     else:
 
-        return render(request, 'create_order.html', {'form':form})
+        return render(request, 'create_order.html', {'form': form})
 
 
 @counter_staff_required()
 def manage_debtors(request):
-    outstanding_orders = Order.objects.filter(paid_fully=False, order_completed =True)
+    outstanding_orders = Order.objects.filter(paid_fully=False, order_completed=True)
     debtors = []
     for outstanding_order in outstanding_orders:
-        if not outstanding_order.costumer in debtors:
-            debtors.append(outstanding_order.costumer)
+        if not outstanding_order.customer in debtors:
+            debtors.append(outstanding_order.customer)
     return render(request, 'counter_debtors.html', {"debtors": debtors, 'outstanding_orders': outstanding_orders})
 
 
 @counter_staff_required()
-def create_costumers(request):
-    form = CostumerForm(request.POST or None)
+def create_customers(request):
+    form = CustomerForm(request.POST or None)
     if form.is_valid():
         a = form.save(commit=False)
         a.created_by = request.user
         a.save()
-        messages.success(request, "Costumer created successfully!")
-        messages.success(request, "Kindly proceed to complete your order or you can create another costumer below")
-        return render(request, 'create_costumer.html', {'form':form})
-    return render(request, 'create_costumer.html', {'form':form})
-
-
-
-
-
+        messages.success(request, "customer created successfully!")
+        messages.success(request, "Kindly proceed to complete your order or you can create another customer below")
+        return render(request, 'create_customer.html', {'form': form})
+    return render(request, 'create_customer.html', {'form': form})
 
 
 @manager_required()
@@ -334,10 +345,9 @@ def staff_creation(request):
         except ObjectDoesNotExist:
             new_profile = Profile.objects.create(first_name=request.POST.get('first_name'),
                                                  user=new_user,
-                                                 last_name= request.POST.get('last_name'),
+                                                 last_name=request.POST.get('last_name'),
                                                  address=request.POST.get('address'),
-                                                 phone_number= request.POST.get('phone_number'))
-
+                                                 phone_number=request.POST.get('phone_number'))
 
         all_staff = CustomUser.objects.all()
         user = request.user
@@ -350,7 +360,7 @@ def staff_creation(request):
         }
         return redirect(reverse('product_app:staff_lazy_loader'))
 
-        #return redirect(reverse("product_app:manage_staff"))
+        # return redirect(reverse("product_app:manage_staff"))
 
 
 @manager_required()

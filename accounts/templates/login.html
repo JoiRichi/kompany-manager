@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Design by foolishdeveloper.com -->
+    <!-- Design by foolishdeveloper.com -->
     <title>Company Manager</title>
- 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <!--Stylesheet-->
     <style media="screen">
@@ -133,15 +133,16 @@ button{
   margin-right: 4px;
 }
 
+
     </style>
 </head>
 <body>
-    <div class="background">
-        <div class="shape"></div>
-        <div class="shape"></div>
-    </div>
-    <div style="display: flex;">
-    <form method="post" action="{% url 'accounts:login' %}">
+<div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+<div style="display: flex;">
+    <form action="{% url 'accounts:login' %}" method="post">
         {%csrf_token%}
 
         <h3>Login Here</h3>
@@ -149,18 +150,20 @@ button{
         <h6 style="color:red">{{error}}</h6>
         {%endif%}
         <label for="username">Username</label>
-        <input type="text" name="email" placeholder="Email" id="username">
+        <input id="username" name="email" placeholder="Email" type="text">
 
         <label for="password">Password</label>
-        <input autocomplete="off" type="password" placeholder="Password" name="password" id="password">
+        <input autocomplete="off" id="password" name="password" placeholder="Password" type="password">
 
         <button>Log In</button>
 
-    </form></div>
+    </form>
+</div>
 
 
 <script>
  document.getElementById("password").value = ''
+
 </script>
 </body>
 </html>

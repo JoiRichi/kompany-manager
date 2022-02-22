@@ -1,5 +1,5 @@
 <turbo-frame id="create_order">
-        <style>
+    <style>
 input[type=text],input[type=number], select {
   width: 100%;
   padding: 12px 20px;
@@ -28,104 +28,115 @@ input[type=submit]:hover {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
-</style>
-
-              <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
-                <div class="rounded-t mb-0 px-4 py-3 border-0 form_frame">
-                    <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
-                        <turbo-frame id="create_sub_order">
-                       <div> Costumer name: {{order.costumer}}</div>
-                        <div>Total Order Price: {{order.total_order_price}}  </div>
-                         <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-                    <a style="text-align:right" href="{%url 'product_app:create_sub_order' order.id%}">Add Suborder</a>
 
 
-                    </div>
+    </style>
 
-                                          <table class="items-center w-full bg-transparent border-collapse">
-                    <thead>
-                      <tr>
-                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                          Sub Product Name
-                        </th>
-                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                          Quantity
-                        </th>
-                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                          Buy Price
-                        </th>
-                          <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-
-                        </th>
-
-                      </tr>
-                    </thead>
-                    <tbody>
-                    {%for sub_order in order.suborder_set.all %}
-
-                      <tr>
-
-
-
-                        <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                           {{sub_order.product_ordered}}
-                        </th>
-
-                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                         N {{sub_order.quantity}}
-                        </td>
-                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          {{sub_order.buy_price}}
-                        </td>
-
-
-                          <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-
-
-                  <a    href="{%url 'product_app:edit_sub_product' sub_product.id%}"  type="button" style="transition:all .15s ease; color:blue">
-                delete Sub Product
-              </a>
-                       </td>
-
-
-
-                      </tr>
-
-
-                    {%endfor%}
-
-                    </tbody>
-
-                                          </table></turbo-frame>
-
-
-
-
-
+    <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
+        <div class="rounded-t mb-0 px-4 py-3 border-0 form_frame">
+            <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
+                <turbo-frame id="create_sub_order">
+                    <div> Customer name: {{order.customer}}</div>
+                    <div>Total Order Price: {{order.total_order_price}}</div>
+                    <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
+                        <a href="{%url 'product_app:create_sub_order' order.id%}" style="text-align:right">Add
+                            Suborder</a>
 
 
                     </div>
+                    <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+                    <table class="items-center w-full bg-transparent border-collapse">
+                        <thead>
+                        <tr>
+                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                Sub Product Name
+                            </th>
+
+                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                               Size
+                            </th>
+
+                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                Quantity
+                            </th>
+                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                Unit Price
+                            </th>
+                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                Price
+                            </th>
+                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+
+                            </th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {%for sub_order in order.suborder_set.all %}
+
+                        <tr>
 
 
+                            <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                                {{sub_order.product_ordered}}
+                            </th>
 
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                {{sub_order.length}} by {{sub_order.breadth}}
+                            </td>
+
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                 {{sub_order.quantity}}
+                            </td>
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                               N {{sub_order.buy_price}}
+                            </td>
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                              N {{sub_order.sub_order_total}}
+                            </td>
+
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+
+
+                                <a href="{%url 'product_app:edit_sub_product' sub_product.id%}"
+                                   style="transition:all .15s ease; color:blue"
+                                   type="button">
+                                    delete Sub Product
+                                </a>
+                            </td>
+
+
+                        </tr>
+
+
+                        {%endfor%}
+
+                        </tbody>
+
+                    </table></div>
+                </turbo-frame>
+
+
+            </div>
 
 
             {% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li style="background-color:green;color:white" class="{{ message.tags }}">
-    {{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-<form method="post" action="{%url 'product_app:complete_order' order.id%}">
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="{{ message.tags }}" style="background-color:green;color:white">
+                    {{ message }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <form action="{%url 'product_app:complete_order' order.id%}" method="post">
 
-    {%csrf_token%}
-    {{form.as_p}}
-    <input type="submit" >
+                {%csrf_token%}
+                {{form.as_p}}
+                <input type="submit">
 
-</form>
+            </form>
 
-              </div>
-</div>
+        </div>
+    </div>
 </turbo-frame>

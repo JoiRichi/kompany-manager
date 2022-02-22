@@ -1,0 +1,95 @@
+{% extends 'manager_base.html' %}
+{% block content %}
+
+<style>
+ <style>
+input[type=text],input[type=number], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+
+
+input[type=submit] {
+  width: 100%;
+  background-color: #10233b;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #214e8a;
+}
+.form_frame {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+
+</style>
+
+
+<div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
+    <turbo-frame id="hi">
+
+
+        <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
+            <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+                <h1 class="font-semibold text-base text-blueGray-900">
+                    Please select the Staff and the Date range of the report you want
+                </h1>
+
+            </div>
+            <div class="rounded-t mb-0 px-4 py-3 border-0 form_frame">
+
+                <form action="{%url 'product_app:manage_staff_transactions'%}" method="post">
+                    {%csrf_token%}
+                    {{form.as_p}}
+                    <input class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+                           style="margin-top:30px"
+                           type="submit">
+                </form>
+            </div>
+
+            <div class="block w-full overflow-x-auto">
+                <!-- Projects table kkk-->
+            </div>
+        </div>
+
+
+        {%if orders%}
+        <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
+            <div class="rounded-t mb-0 px-4 py-3 border-0">
+                {{orders}}
+            </div>
+
+            <div class="block w-full overflow-x-auto">
+                <!-- Projects table kkk-->
+            </div>
+        </div>
+        {%endif%}
+
+    </turbo-frame>
+
+</div>
+
+
+{% endblock %}

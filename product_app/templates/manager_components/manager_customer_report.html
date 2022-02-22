@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <style>
+
+p{
+
+
+}
+.styled-table {
+    border-collapse: collapse;
+    margin: 15px 0;
+     font-size: 15px;
+    font-family: sans-serif;
+    min-width: 200px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color: blue;
+    color: #ffffff;
+    text-align: left;
+     font-size: 15px;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+     font-size: 10px;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+     font-size: 15px;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+     font-size: 10px;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+    font-size: 10px;
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: black;
+    font-size: 20px;
+}
+
+
+    </style>
+</head>
+<body>
+<!-- only internal css classes below are doing something -->
+<div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
+    <turbo-frame id="hi">
+
+        <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
+
+            <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+                <h1 class="font-semibold text-base text-blueGray-900" style="text-align:center">
+                    Report of Sales (Transaction history for {{customer}})
+                </h1>
+                <h3 class="font-semibold text-base text-blueGray-900">
+                    printed: {{printed_date}}
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <div class="flex flex-col">
+            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                    <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                        <div class="py-2 align-middle inline-block min-w-full bg-white sm:px-6 lg:px-8">
+                            <br>
+                            <h2 style="text-align:center">Customer Details</h2>
+                            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+
+                                <table class="min-w-full divide-y divide-gray-200 styled-table">
+                                    <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            scope="col">
+                                            Name
+                                        </th>
+
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            scope="col">
+                                            Phone Number
+                                        </th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            scope="col">
+                                            Date Joined
+                                        </th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            scope="col">
+                                            Address
+                                        </th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            scope="col">
+                                            Creator
+                                        </th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900">
+                                                        {{customer}}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            {{customer.phone_number}}
+
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{customer.date_created}}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{customer.address}}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{customer.created_by.profile}}
+                                        </td>
+
+
+                                    </tr>
+
+                                    <!-- More people... -->
+                                    </tbody>
+
+                                    <thead class="bg-gray-50">
+
+
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            scope="col">
+                                            Order Date
+                                        </th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            scope="col">
+                                            Job Name
+                                        </th>
+
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            scope="col">
+                                            Items Bought
+                                        </th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            scope="col">
+                                            Total Order Price
+                                        </th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            scope="col">
+                                            Deposit
+                                        </th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            scope="col">
+                                            Discount
+                                        </th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            scope="col">
+                                            Balance
+                                        </th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                    {%for order in orders%}
+                                    <tr>
+
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+
+                                                <div class="ml-4">
+                                                    {%if order in outstanding_orders%}
+                                                    <div class="text-sm font-medium text-red-900"
+                                                         style="font-color:red">
+                                                        <p style="color:red">{{order.date_created}}</p>
+                                                    </div>
+                                                    {%else%}
+                                                    <div class="text-sm font-medium text-gray-900">
+                                                        {{order.date_created}}
+                                                    </div>
+                                                    {%endif%}
+
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            {{order.job_name}}
+
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {%for sub_order in order.suborder_set.all %} {{sub_order}} <br>{%endfor%}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{order.total_order_price}}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{order.deposit}}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{order.discount}}
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-green-500">
+                                            {{order.balance}}
+                                        </td>
+
+
+                                    </tr>
+
+                                    {%endfor%}
+
+                                    <!-- More people... -->
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="flex flex-col">
+                    <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div class="py-2 align-middle inline-block min-w-full bg-white sm:px-6 lg:px-8">
+                            <br>
+                            <h2 style="text-align:center">Grand Totals</h2>
+                            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                                <table class="styled-table">
+                                    <thead>
+                                    <tr>
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            Total Order Price
+                                        </th>
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            Total money paid
+                                        </th>
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            Total Discount Given
+                                        </th>
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            Total Outstanding Funds
+                                        </th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr class="active-row">
+                                        <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                                            NGN {{c_total_order_price}}
+                                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                            NGN {{total_funds_received}}
+                                        </td>
+                                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                            NGN {{total_discount}}
+                                        </td>
+                                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                                            style="color: red">
+                                            NGN {{total_outstanding_funds}}
+                                        </td>
+
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div> </div> </turbo-frame>
+</div>
+
+
+</body>
+</html>

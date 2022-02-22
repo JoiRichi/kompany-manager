@@ -1,64 +1,77 @@
 <turbo-frame id="create_sub_orde">
-                       <div> Costumer name: {{order.costumer}}</div>
-                        <div>Total Order Price: {{order.total_order_price}}  </div>
-                         <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-                    <a style="text-align:right" href="{%url 'product_app:create_sub_order' order.id%}">Add Suborder</a>
+    <div> customer name: {{order.customer}}</div>
+    <div>Total Order Price: {{order.total_order_price}}</div>
+    <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
+        <a href="{%url 'product_app:create_sub_order' order.id%}" style="text-align:right">Add Suborder</a>
 
 
-                    </div>
+    </div>
 
-                                          <table class="items-center w-full bg-transparent border-collapse">
-                    <thead>
-                      <tr>
-                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                          Sub Product Name
-                        </th>
-                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                          Quantity
-                        </th>
-                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                          Buy Price
-                        </th>
-                          <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+    <table class="items-center w-full bg-transparent border-collapse">
+        <thead>
+        <tr>
+           <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                Sub Product Name
+                            </th>
 
-                        </th>
+                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                               Size
+                            </th>
 
-                      </tr>
-                    </thead>
-                    <tbody>
-                    {%for sub_order in order.suborder_set.all %}
+                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                Quantity
+                            </th>
+                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                Unit Price
+                            </th>
+                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                Price
+                            </th>
+                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
 
-                      <tr>
-
-
-
-                        <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                           {{sub_order.product_ordered}}
-                        </th>
-
-                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                         {{sub_order.quantity}}
-                        </td>
-                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          N {{sub_order.buy_price}}
-                        </td>
+                            </th>
 
 
-                          <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+        </tr>
+        </thead>
+        <tbody>
+        {%for sub_order in order.suborder_set.all %}
+
+        <tr>
+
+<th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                                {{sub_order.product_ordered}}
+                            </th>
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                {{sub_order.length}} by {{sub_order.breadth}}
+                            </td>
+
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                 {{sub_order.quantity}}
+                            </td>
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                               N {{sub_order.buy_price}}
+                            </td>
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                               N {{sub_order.sub_order_total}}
 
 
-                  <a    href="{%url 'product_app:delete_sub_order' sub_order.id%}"  type="button" style="transition:all .15s ease; color:blue">
-                remove Suborder
-              </a>
-                       </td>
+            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
 
 
+                <a href="{%url 'product_app:delete_sub_order' sub_order.id%}" style="transition:all .15s ease; color:blue"
+                   type="button">
+                    remove Suborder
+                </a>
+            </td>
 
-                      </tr>
+
+        </tr>
 
 
-                    {%endfor%}
+        {%endfor%}
 
-                    </tbody>
+        </tbody>
 
-                                          </table></turbo-frame>
+    </table>
+</turbo-frame>

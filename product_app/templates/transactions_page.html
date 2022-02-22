@@ -43,81 +43,54 @@ input[type=submit]:hover {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
+
 </style>
 
 
-        <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4" >
-            <turbo-frame id="hi">
-
-              <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
-                  <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-                      <h1 class="font-semibold text-base text-blueGray-900">
-                      Please select the Date range of the report you want
-                      </h1>
-
-                    </div>
-                <div class="rounded-t mb-0 px-4 py-3 border-0 form_frame">
-
-                    <form  method="post" action="{%url 'product_app:manage_transactions'%}">
-                        {%csrf_token%}
-                 {{form.as_p}}
-                         <input style="margin-top:30px" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="submit">
-                        </form>
-                </div>
-
-                <div class="block w-full overflow-x-auto">
-                  <!-- Projects table kkk-->
-                </div>
-              </div>
+<div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
+    <turbo-frame id="hi">
 
 
-            {%if orders%}
-            <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
-                <div class="rounded-t mb-0 px-4 py-3 border-0">
-                    {{orders}}
-                </div>
+        <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
+            <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+                <h1 class="font-semibold text-base text-blueGray-900">
+                    Please select the Date range of the report you want
+                </h1>
 
-                <div class="block w-full overflow-x-auto">
-                  <!-- Projects table kkk-->
-                </div>
-              </div>
-            {%endif%}
-            </turbo-frame>
+            </div>
+            <div class="rounded-t mb-0 px-4 py-3 border-0 form_frame">
 
+                <form action="{%url 'product_app:manage_transactions'%}" method="post">
+                    {%csrf_token%}
+                    {{form.as_p}}
+                    <input class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+                           style="margin-top:30px"
+                           type="submit">
+                </form>
+            </div>
+
+            <div class="block w-full overflow-x-auto">
+                <!-- Projects table kkk-->
+            </div>
         </div>
 
 
+        {%if orders%}
+        <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
+            <div class="rounded-t mb-0 px-4 py-3 border-0">
+                {{orders}}
+            </div>
+
+            <div class="block w-full overflow-x-auto">
+                <!-- Projects table kkk-->
+            </div>
+        </div>
+        {%endif%}
+
+    </turbo-frame>
+
+</div>
+
+
 {% endblock %}
-
-
-
-class Costumer(models.Model):
-    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=True, null=True)
-    costumer_first_name = models.CharField(max_length=300)
-    costumer_last_name = models.CharField(max_length=300, null=True, blank=True)
-    phone_number = models.CharField(max_length=11, unique=True)
-    date_created = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return '{} {}'.format(self.costumer_first_name, self.costumer_last_name)
-
-    def get_details(self):
-        details = {"full_name": "{} {}".format(self.costumer_first_name.capitalize(), self.costumer_last_name.capitalize()),
-                   "phone_number": self.phone_number,
-                   "created_by": self.created_by,
-                   "date_created": self.date_created,
-
-                   "transaction_history": self.get_transaction_history(),
-                   }
-        return details
-
-    def get_transaction_history(self):
-        details = {
-            "all_orders": Order.objects.filter(costumer=self).order_by("date_created"),
-            'outstanding_orders' : Order.objects.filter(costumer=self, order_completed = True, paid_fully =False).order_by("date_created"),
-
-
-
-        }
-        return details
 

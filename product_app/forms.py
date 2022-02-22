@@ -1,46 +1,45 @@
-from django import  forms
-from django.forms import ModelForm
-from datetime import datetime
-from accounts.models import CustomUser, Profile
-from .models import Order, Product, ProductSubType, Costumer, SubOrder
+from django import forms
+from django.forms import ModelForm, Select
 
-from django.contrib.auth.forms import UserCreationForm
-
+from accounts.models import CustomUser
+from .models import Order, Product, ProductSubType, Customer, SubOrder
 
 
 class UserForm(ModelForm):
     class Meta:
         model = CustomUser
-        fields =["email", 'is_counter_staff', 'is_manager', 'password']
-
+        fields = ["email", 'is_counter_staff', 'is_manager', 'password']
 
 
 class OrderQueryForm(forms.Form):
-    start_date = forms.DateTimeField(widget=forms.SelectDateWidget(), label ="from")
-    end_date = forms.DateTimeField(widget=forms.SelectDateWidget(), label ="to")
+    start_date = forms.DateTimeField(widget=forms.SelectDateWidget(), label="from")
+    end_date = forms.DateTimeField(widget=forms.SelectDateWidget(), label="to")
 
+
+class OrderQueryStaffForm(forms.Form):
+    staff = forms.ModelChoiceField(queryset=CustomUser.objects.filter(is_counter_staff = True),  label="staff name")
+    start_date = forms.DateTimeField(widget=forms.SelectDateWidget(), label="from")
+    end_date = forms.DateTimeField(widget=forms.SelectDateWidget(), label="to")
 
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ('costumer', )
-
+        fields = ('customer',)
 
 
 class OrderEditForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ('deposit', 'discount', 'order_description')
-
+        fields = ('job_name', 'deposit', 'discount',)
 
 
 class SubOrderForm(forms.ModelForm):
     class Meta:
         model = SubOrder
-        fields = ('product_ordered', 'quantity',)
-
-
-
+        fields = ('product_ordered', 'length', 'breadth', 'quantity',)
+        widgets = {
+            'product_ordered': Select(attrs={'required':True}),
+        }
 
 
 class ProductForm(forms.ModelForm):
@@ -49,15 +48,13 @@ class ProductForm(forms.ModelForm):
         fields = ('product_name',)
 
 
-
-
 class ProductSubTypeForm(forms.ModelForm):
     class Meta:
         model = ProductSubType
         fields = ('sub_type_name', "price")
 
 
-class CostumerForm(forms.ModelForm):
+class CustomerForm(forms.ModelForm):
     class Meta:
-        model = Costumer
+        model = Customer
         exclude = ('created_by', 'date_created')

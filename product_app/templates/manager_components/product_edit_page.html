@@ -28,14 +28,15 @@ input[type=submit]:hover {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
-</style>
-    <div class="form_frame">
-    <form method="post" action="{%url 'product_app:edit_product' product.id%}">
-        {%csrf_token%}
-        {{form.as_p}}
-        <input type="submit">
-    </form></div>
 
+    </style>
+    <div class="form_frame">
+        <form action="{%url 'product_app:edit_product' product.id%}" method="post">
+            {%csrf_token%}
+            {{form.as_p}}
+            <input type="submit">
+        </form>
+    </div>
 
 
 </turbo-frame>

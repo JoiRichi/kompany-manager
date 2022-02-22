@@ -1,12 +1,12 @@
 from functools import wraps
-from django.contrib import messages
-from django.contrib.auth.views import redirect_to_login
-from django.contrib.auth import REDIRECT_FIELD_NAME
-
-from django.shortcuts import resolve_url
 from urllib.parse import urlparse
-import company_manager.settings as settings
 
+from django.contrib import messages
+from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.auth.views import redirect_to_login
+from django.shortcuts import resolve_url
+
+import company_manager.settings as settings
 
 default_message = 'Unauthorised action.'
 unauthenticated_message = 'User already logged in.'
@@ -37,11 +37,14 @@ def user_passes_test(test_func, login_url=None, redirect_field_name=REDIRECT_FIE
                 path = request.get_full_path()
             return redirect_to_login(
                 path, resolved_login_url, redirect_field_name)
+
         return _wrapped_view
+
     return decorator
 
 
-def superuser_required(view_func=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='/login', message="Superuser required"):
+def superuser_required(view_func=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='/login',
+                       message="Superuser required"):
     """
     Decorator for views that checks that the user is logged in and is a
     superuser, displaying message if provided.
@@ -57,7 +60,8 @@ def superuser_required(view_func=None, redirect_field_name=REDIRECT_FIELD_NAME, 
     return actual_decorator
 
 
-def login_required(view_func=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='/login', message=default_message):
+def login_required(view_func=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='/login',
+                   message=default_message):
     """
     Decorator for views that checks that the user is logged in and is
     staff, displaying message if provided.
@@ -72,7 +76,9 @@ def login_required(view_func=None, redirect_field_name=REDIRECT_FIELD_NAME, logi
         return actual_decorator(view_func)
     return actual_decorator
 
-def counter_staff_required(view_func=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='/login', message="Access declined!"):
+
+def counter_staff_required(view_func=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='/login',
+                           message="Access declined!"):
     """
     Decorator for views that checks that the user is logged in and is
     staff, displaying message if provided.
@@ -87,7 +93,9 @@ def counter_staff_required(view_func=None, redirect_field_name=REDIRECT_FIELD_NA
         return actual_decorator(view_func)
     return actual_decorator
 
-def unauthenticated_required(view_func=None, redirect_field_name=REDIRECT_FIELD_NAME, home_url='/', message=unauthenticated_message):
+
+def unauthenticated_required(view_func=None, redirect_field_name=REDIRECT_FIELD_NAME, home_url='/',
+                             message=unauthenticated_message):
     """
     Decorator for views that checks that the user is
     not logged in, displaying message if provided.
@@ -103,7 +111,8 @@ def unauthenticated_required(view_func=None, redirect_field_name=REDIRECT_FIELD_
     return actual_decorator
 
 
-def manager_required(view_func=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='/login', message="Managerial rank required"):
+def manager_required(view_func=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='/login',
+                     message="Managerial rank required"):
     """
     Decorator for views that checks that the user is logged in and is
     staff, displaying message if provided.
@@ -118,7 +127,9 @@ def manager_required(view_func=None, redirect_field_name=REDIRECT_FIELD_NAME, lo
         return actual_decorator(view_func)
     return actual_decorator
 
-def director_required(view_func=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='/login', message="Managerial rank required"):
+
+def director_required(view_func=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='/login',
+                      message="Managerial rank required"):
     """
     Decorator for views that checks that the user is logged in and is
     staff, displaying message if provided.
@@ -132,4 +143,3 @@ def director_required(view_func=None, redirect_field_name=REDIRECT_FIELD_NAME, l
     if view_func:
         return actual_decorator(view_func)
     return actual_decorator
-

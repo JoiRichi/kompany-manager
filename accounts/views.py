@@ -1,15 +1,9 @@
 from django.contrib import messages
-from django.core.exceptions import ObjectDoesNotExist
-from decorators import login_required
 from django.contrib.auth import authenticate, logout, login
-from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect, reverse
+from django.contrib.auth import authenticate, logout, login
+from django.shortcuts import render, redirect, HttpResponseRedirect, reverse, HttpResponse
 
-from .forms import RegistrationForm, LoginForm
-from .models import CustomUser
-
-
-
-
+from .forms import LoginForm
 
 
 def logout_view(request):
@@ -18,13 +12,17 @@ def logout_view(request):
 
 
 
+def handle404(request, exception):
+    messages.warning(request, "The page you just tried to access does not exist, please login again")
+    return redirect('accounts:login')
+
 
 
 def loginpage(request):
-    form= LoginForm(request.POST or None)
+    form = LoginForm(request.POST or None)
     if form.is_valid():
         email = form.cleaned_data.get('email')
-        password= form.cleaned_data.get('password')
+        password = form.cleaned_data.get('password')
         user = authenticate(username=email, password=password)
 
         if user is not None:
@@ -45,4 +43,3 @@ def loginpage(request):
     else:
         context = {'form': form}
         return render(request, 'login.html', context)
-
